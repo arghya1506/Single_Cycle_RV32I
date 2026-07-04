@@ -1,144 +1,115 @@
-RISC-V Single Cycle Processor (RV32I)
-A 32-bit single-cycle RISC-V processor implemented in Verilog, supporting a subset of the RV32I instruction set architecture.
-The processor is designed, simulated, and verified using Verilog testbenches and GTKWave.
-This project demonstrates the full datapath and control implementation of a basic RISC-V CPU including:
-Arithmetic and logic instructions
-Immediate instructions
-Load and store instructions
-Branch instructions
-Jump instructions (jal, jalr)
+🚀 Single-Cycle RV32I RISC-V Processor
 
-Features
-Implemented instructions include:
-R-Type Instructions:
-add
-sub
-and
-or
-slt
-sltu
-srl
-sra
 
-I-Type Instructions:
-addi
-andi
-ori
-slti
-sltiu
-srli
-srai
+📖 Introduction
+This project presents the RTL design and verification of a 32-bit Single-Cycle RISC-V processor implementing the RV32I Base Integer Instruction Set Architecture (ISA) in Verilog HDL. The processor executes each instruction in a single clock cycle, making it simple to understand and an excellent starting point for learning processor design.
+The design follows a Harvard Architecture, using separate instruction and data memories, and consists of modular RTL blocks such as the Program Counter, Control Unit, Register File, Immediate Generator, ALU, Data Memory, and Write-Back Multiplexer. The processor has been functionally verified through simulation using Icarus Verilog and GTKWave.
 
-Memory Instructions:
-lw
-sw
 
-Branch Instructions:
-beq
-bne
-blt
-bge
+✨ Features
+✅ Complete RV32I Base Integer ISA
+✅ 32-bit datapath
+✅ Modular RTL design
+✅ Harvard Architecture
+✅ Byte-addressable data memory
+✅ Word-aligned instruction memory
+✅ Immediate generation for all instruction formats
+✅ Branch and jump support
+✅ Fully synthesizable Verilog HDL
+✅ Functionally verified using simulation
 
-Jump Instructions:
-jal
-jalr
 
-Processor Architecture
-The processor consists of the following modules:
-Instruction Memory
-Program Counter
-Register File
-Immediate Generator
-ALU
-Data Memory
-Control Unit
-ALU Control
-Branch Logic
-PC Control Logic
-Datapath Overview
+🏛️ Processor Architecture
+The processor is composed of the following functional blocks:
+📍 Program Counter (PC)
+📖 Instruction Memory
+🎮 Main Control Unit
+📚 Register File
+🔢 Immediate Generator
+➕ ALU & ALU Control
+💾 Data Memory
+🔀 Write-Back Multiplexer
+🌿 Branch & Jump Logic
+These modules work together to fetch, decode, execute, access memory, and write back the result of every instruction within a single clock cycle.
 
-PC → Instruction Memory → Decoder
-     ↓
-Register File → ALU → Data Memory
-     ↓
-Writeback → Register File
-Project Structure
-Example project organization:
 
-riscv-single-cycle/
-│
-├── src/
-│   ├── ALU.v
-│   ├── ControlUnit.v
-│   ├── ALUControl.v
-│   ├── ImmediateGenerator.v
-│   ├── RegisterFile.v
-│   ├── DataMemory.v
-│   ├── InstructionMemory.v
-│   ├── PC.v
-│   └── CpuTop.v
-│
-├── testbench/
-│   └── CpuTopTb.v
-│
-├── waveforms/
-│   └── simulation.vcd
-│
-└── README.md
-Simulation
-The processor was tested using:
+📋 Supported RV32I Instructions
+R-Type
+ADD
+SUB
+AND
+OR
+XOR
+SLL
+SRL
+SRA
+SLT
+SLTU
+I-Type
+ADDI
+ANDI
+ORI
+XORI
+SLLI
+SRLI
+SRAI
+SLTI
+SLTIU
+LW
+JALR
+S-Type
+SW
+B-Type
+BEQ
+BNE
+BLT
+BGE
+BLTU
+BGEU
+U-Type
+LUI
+AUIPC
+J-Type
+JAL
 
+
+⚙️ Instruction Execution
+Every instruction passes through the following stages within one clock cycle:
+Fetch instruction from Instruction Memory.
+Decode the instruction and generate control signals.
+Read operands from the Register File.
+Generate the required immediate value.
+Perform the ALU operation.
+Access Data Memory (for load/store instructions).
+Write the result back to the destination register.
+Update the Program Counter for the next instruction.
+
+
+🛠️ Development Tools
+Verilog HDL
 Icarus Verilog
 GTKWave
-Compile
-Copy code
+Vivado
 
-iverilog -o cpu CpuTop.v CpuTopTb.v
-Run Simulation
 
-View Waveforms
-gtkwave simulation.vcd
+📸 Verification
+The processor has been verified using custom Verilog testbenches covering:
+Arithmetic operations
+Logical operations
+Shift operations
+Load and Store instructions
+Branch instructions
+Jump instructions
+Register write-back
+Program Counter updates
+Waveforms generated using GTKWave confirmed the correct execution of all supported instructions.
 
-Example Program
-Example instructions loaded into instruction memory:
-addi x1, x0, 10
-addi x2, x0, 3
-add  x3, x1, x2
-sub  x4, x1, x2
-sw   x1, 0(x10)
-lw   x5, 0(x10)
-beq  x1, x2, label
-jal  x1, target
-jalr x2, 0(x3)
 
-Verification
-The processor functionality was verified through:
-Register writeback verification
-ALU operation validation
-Memory read/write correctness
-Branch control logic
-Jump instruction handling
-
-Signals monitored in GTKWave:
-pc_out
-instruction
-rs1
-rs2
-rd
-ImmExt
-ALU_result
-MemWrite
-MemRead
-ResultSrc
-RegWrite
-
-Future Improvements
-Possible extensions:
-5-stage pipelined processor
-Cache memory controller
-Hazard detection
-Forwarding unit
-Branch prediction
-Author
-Arghya Pratim Biswas
-Project developed as part of learning computer architecture and processor design.
+🚀 Future Work
+Five-stage pipelined processor
+Hazard Detection Unit
+Forwarding Unit
+Cache Controller
+UART Interface
+FPGA implementation
+AXI bus interface
